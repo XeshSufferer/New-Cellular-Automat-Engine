@@ -11,7 +11,7 @@
    git clone https://github.com/XeshSufferer/New-Cellular-Automat-Engine.git
    ```
 
-2. **Откройте проект в Visual Studio или другой IDE с поддержкой C#.**
+2. **Откройте проект в Visual Studio или другой IDE с поддержкой C# или используйте Releases файлы**
 
 3. **Настройте параметры:**
    - Измените файл `settings.json` для задания параметров симуляции (размер карты, количество поколений, используемое правило и т.д.).
@@ -29,6 +29,33 @@
 
 6. **Результаты:**
    - Результаты симуляции будут выведены в консоль.
+
+## Настройка проекта в settings.json
+
+1. **Разбор settings файла**
+   - Автоматически сгенерированные стандартные настройки 
+   ```json
+   {
+      "Width":1200,
+      "Height":600
+      ,"GenerationType":"RandomDot",
+      "GenerationCount":100,
+      "Delay":100,
+      "Rule":"Rule22",
+      "JsonMode":false, 
+      "JsonRule":"ExampleRule"
+   }
+   ```
+
+   'Width' - Ширина карты симуляции
+   'Height' - Высота карты симуляции
+   'GenerationType' - Тип генерации сида (RandomDot, FullSeed, RandomSeed)
+   'GenerationCount' - Количество генераций
+   'Delay' - Задержка между генерациями
+   'Rule' - Название встроенного правила, для демонстрации работы (Из встроенных присутствуют Rule22, Rule30, Rule110 | Будет проигнорированно если JsonMode - true)
+   'JsonMode' - Включение/отключение чтения JSON правил генерации
+   'JsonRule' - Name значение пользовательского JSON правила (будет проигнорированно если JsonMode - false) 
+
 
 ## Структура проекта
 
