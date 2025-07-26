@@ -1,5 +1,7 @@
 # New-Cellular-Automat-Engine
 
+[English](README.md) | [Русский](README.ru.md)
+
 ## Description
 
 This project implements an engine for one-dimensional cellular automata with support for custom rules. You can use built-in rules (Rule22, Rule30, Rule110) or create your own in JSON format.
