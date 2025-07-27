@@ -6,6 +6,17 @@ namespace Automat.Maps
         public int Width;
         public int Height;
 
+        public static void CopyMap(Map source, Map target)
+        {
+            for (int y = 0; y < source.Height; y++)
+            {
+                for (int x = 0; x < source.Width; x++)
+                {
+                    target.SetCellValue(x, y, source.GetCellValue(x, y));
+                }
+            }
+        }
+
         public Map(int width, int height)
         {
             this.Cells = new List<List<Cell>>(height);

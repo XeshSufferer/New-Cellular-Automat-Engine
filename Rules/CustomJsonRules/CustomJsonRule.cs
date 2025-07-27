@@ -1,9 +1,10 @@
 using Automat.Maps;
 using Automat.ExampleSystem;
+using Automat.StandartRules;
 
 namespace Automat.CustomRules
 {
-    public class CustomJsonRule 
+    public class CustomJsonRule : IRule
     {
         public string Name { get; set; }
 

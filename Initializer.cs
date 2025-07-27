@@ -19,43 +19,39 @@ namespace Automat
         {
             Settings settings = SettingsReader.ReadSettings("settings.json");
             CustomRulesReader.GenerateExampleJsonRule();
-            var jsonRules = CustomRulesReader.ReadRules();
             Map map = new Map(settings.Width, settings.Height);
-            Rule rule = RuleFactory.CreateRule(settings.Rule);
 
+            AutoFindAndWork(map, settings);
+        }
+
+        private void AutoFindAndWork(Map map, Settings settings)
+        {
             switch(settings.JsonMode)
             {
                 case true:
                     {
-                        for(int i = 0; i != jsonRules.Count; i++)
-                        {
-                            if(jsonRules[i].Name == settings.JsonRule)
-                            {
-                                WorkWithJsonMode(map, jsonRules[i], settings.GenerationCount, settings.Delay, settings);
-                                break;
-                            }
-                        }
-                        throw new Exception("Rule not found by name " + settings.JsonRule);
+                        Work(map, CustomRulesReader.FindRuleByName(settings.JsonRule), settings.GenerationCount, settings.Delay, settings);
                         break;
                     }
                 case false:
                     {
-                        Work(map, rule, settings.GenerationCount, settings.Delay, settings);
+                        Work(map, RuleFactory.CreateRule(settings.Rule), settings.GenerationCount, settings.Delay, settings);
                         break;
                     }
             }
         }
 
-        private void Work(Map map, Rule rule, int generationCount, int delay, Settings settings)
+        private void Work(Map map, IRule rule, int generationCount, int delay, Settings settings)
         {
-            Writer writer = new Writer();
-            MapRegenerator mapRegenerator = new MapRegenerator();
+            MapRegenerator mapRegenerator = new MapRegenerator(map);
+            Writer writer = new Writer(mapRegenerator);
 
             for(int i = 0; i != generationCount; i++)
             {
                 Map newMap = map.Clone();
-                Map usableMap = mapRegenerator.Regenerate(newMap, rule, settings.GenerationType);
-                writer.Write(usableMap);
+                
+                writer.Write(mapRegenerator.Regenerate(newMap, rule, settings.GenerationType));
+                
                 if(delay > 0)
                 {
                     Thread.Sleep(delay);
@@ -69,29 +65,5 @@ namespace Automat
             }
             Console.ReadKey();
         }
-
-        private void WorkWithJsonMode(Map map, CustomJsonRule jsonRule, int generationCount, int delay, Settings settings)
-        {
-            Writer writer = new Writer();
-            MapRegenerator mapRegenerator = new MapRegenerator();
-
-            for(int i = 0; i != generationCount; i++)
-            {
-                Map newMap = map.Clone();
-                Map usableMap = mapRegenerator.Regenerate(newMap, jsonRule, settings.GenerationType);
-                writer.Write(usableMap);
-                if(delay > 0)
-                {
-                    Thread.Sleep(delay);
-                }
-                else
-                {
-                    Console.ReadKey();
-                }
-
-                Console.Clear();
-            }
-            Console.ReadKey();
-        }   
     }
 }

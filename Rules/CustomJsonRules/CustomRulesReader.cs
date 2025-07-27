@@ -7,6 +7,19 @@ namespace Automat.CustomRules
     public static class CustomRulesReader
     {
 
+        public static CustomJsonRule FindRuleByName(string name)
+        {
+            List<CustomJsonRule> rules = ReadRules();
+            for(int i = 0; i != rules.Count; i++)
+            {
+                if(rules[i].Name == name)
+                {
+                    return rules[i];
+                }
+            }
+            throw new Exception("Rule not found by name: " + name);
+        }
+
         public static void GenerateExampleJsonRule()
         {
             if(File.Exists("CustomRules\\ExampleRule.json")) return;
