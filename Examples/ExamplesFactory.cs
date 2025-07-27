@@ -65,14 +65,14 @@ namespace Automat.ExampleSystem
         {
             return example switch
             {
-                Examples.TrueTrueFalse => cell.GetTopLeftCellValue() && cell.GetTopRightCellValue() && !cell.GetTopCellValue(),
-                Examples.TrueTrueTrue => cell.GetTopLeftCellValue() && cell.GetTopRightCellValue() && cell.GetTopCellValue(),
-                Examples.TrueFalseFalse => cell.GetTopLeftCellValue() && !cell.GetTopRightCellValue() && !cell.GetTopCellValue(),
-                Examples.TrueFalseTrue => cell.GetTopLeftCellValue() && !cell.GetTopRightCellValue() && cell.GetTopCellValue(),
-                Examples.FalseTrueFalse => !cell.GetTopLeftCellValue() && cell.GetTopRightCellValue() && !cell.GetTopCellValue(),
-                Examples.FalseTrueTrue => !cell.GetTopLeftCellValue() && cell.GetTopRightCellValue() && cell.GetTopCellValue(),
-                Examples.FalseFalseFalse => !cell.GetTopLeftCellValue() && !cell.GetTopRightCellValue() && !cell.GetTopCellValue(),
-                Examples.FalseFalseTrue => !cell.GetTopLeftCellValue() && !cell.GetTopRightCellValue() && cell.GetTopCellValue(),
+                Examples.TrueTrueFalse => cell.GetTopLeftCellValue() && cell.GetTopCellValue() && !cell.GetTopRightCellValue(),
+                Examples.TrueTrueTrue => cell.GetTopLeftCellValue() && cell.GetTopCellValue() && cell.GetTopRightCellValue(),
+                Examples.TrueFalseFalse => cell.GetTopLeftCellValue() && !cell.GetTopCellValue() && !cell.GetTopRightCellValue(),
+                Examples.TrueFalseTrue => cell.GetTopLeftCellValue() && !cell.GetTopCellValue() && cell.GetTopRightCellValue(),
+                Examples.FalseTrueFalse => !cell.GetTopLeftCellValue() && cell.GetTopCellValue() && !cell.GetTopRightCellValue(),
+                Examples.FalseTrueTrue => !cell.GetTopLeftCellValue() && cell.GetTopCellValue() && cell.GetTopRightCellValue(),
+                Examples.FalseFalseFalse => !cell.GetTopLeftCellValue() && !cell.GetTopCellValue() && !cell.GetTopRightCellValue(),
+                Examples.FalseFalseTrue => !cell.GetTopLeftCellValue() && !cell.GetTopCellValue() && cell.GetTopRightCellValue(),
                 _ => throw new Exception("Invalid example"),
             };
         }

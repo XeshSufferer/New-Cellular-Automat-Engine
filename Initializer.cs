@@ -49,7 +49,7 @@ namespace Automat
         private void Work(Map map, Rule rule, int generationCount, int delay, Settings settings)
         {
             Writer writer = new Writer();
-            MapRegenerator mapRegenerator = new MapRegenerator();
+            MapRegenerator mapRegenerator = new MapRegenerator(map);
 
             for(int i = 0; i != generationCount; i++)
             {
@@ -73,7 +73,7 @@ namespace Automat
         private void WorkWithJsonMode(Map map, CustomJsonRule jsonRule, int generationCount, int delay, Settings settings)
         {
             Writer writer = new Writer();
-            MapRegenerator mapRegenerator = new MapRegenerator();
+            MapRegenerator mapRegenerator = new MapRegenerator(map);
 
             for(int i = 0; i != generationCount; i++)
             {
