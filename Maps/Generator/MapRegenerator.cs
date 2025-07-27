@@ -8,17 +8,17 @@ namespace Automat.Maps.Generator
     public class MapRegenerator
     {
 
-        private Random globalRandom = new Random();
+        private Random _globalRandom = new Random();
 
         public event Action<int, int> OnGenerationProgress;
 
-        private Map buffer1;
-        private Map buffer2;
+        private Map _cleanMap;
+        private Map _bufferMap;
 
         public MapRegenerator(Map injectedMap)
         {
-            buffer1 = injectedMap.Clone();
-            buffer2 = injectedMap.Clone();
+            _cleanMap = injectedMap.Clone();
+            _bufferMap = injectedMap.Clone();
         }
 
         public Map Regenerate(Map map, IRule rule, GenerationType generationType)
@@ -35,37 +35,36 @@ namespace Automat.Maps.Generator
         public Map RegenerateWithRandomDot(Map map, IRule rule)
         {
             Map newMap = map.Clone();
-            newMap.SetCellValue(globalRandom.Next(0, newMap.Width), 0, true);
+            newMap.SetCellValue(_globalRandom.Next(0, newMap.Width), 0, true);
             return Regenerate(newMap, rule);
         }
 
         public Map Regenerate(Map map, IRule rule)
         {
-            Map source = buffer1;
-            Map target = buffer2;
+            Map cleanMap = _cleanMap;
+            Map bufferMap = _bufferMap;
             
-            Map.CopyMap(map, source);
+            Map.CopyMap(map, cleanMap);
             
-            for (int y = 1; y < source.Height; y++)
+            for (int y = 1; y < cleanMap.Height; y++)
             {
-                for (int x = 0; x < source.Width; x++)
+                for (int x = 0; x < cleanMap.Width; x++)
                 {
-                    Cell cell = target.GetCell(x, y);
-                    cell.IsAlive = source.GetCellValue(x, y);
+                    Cell cell = bufferMap.GetCell(x, y);
                     rule.Apply(cell);
                 }
 
                 if(y % 200 == 0)
                 {
-                    OnGenerationProgress?.Invoke(y, source.Height);
+                    OnGenerationProgress?.Invoke(y, cleanMap.Height);
                 }
             }
             
-            var temp = buffer1;
-            buffer1 = buffer2;
-            buffer2 = temp;
+            var temp = _cleanMap;
+            _cleanMap = _bufferMap;
+            _bufferMap = temp;
             
-            return buffer1;
+            return _cleanMap;
         }
 
         public Map RegenerateWithRandomSeed(Map map, IRule rule)
@@ -73,7 +72,7 @@ namespace Automat.Maps.Generator
             Map newMap = map.Clone();
             for(int i = 0; i != newMap.Width; i++)
             {
-                newMap.SetCellValue(i, 0, globalRandom.Next(0, 2) == 1);
+                newMap.SetCellValue(i, 0, _globalRandom.Next(0, 2) == 1);
             }
             
             

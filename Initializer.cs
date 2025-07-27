@@ -46,10 +46,14 @@ namespace Automat
             MapRegenerator mapRegenerator = new MapRegenerator(map);
             Writer writer = new Writer(mapRegenerator);
 
+            Map clearMap = map.Clone();
+            Map newMap = clearMap.Clone();
+
             for(int i = 0; i != generationCount; i++)
             {
-                Map newMap = map.Clone();
-                
+
+                Map.CopyMap(clearMap, newMap);
+
                 writer.Write(mapRegenerator.Regenerate(newMap, rule, settings.GenerationType));
                 
                 if(delay > 0)
@@ -61,7 +65,7 @@ namespace Automat
                     Console.ReadKey();
                 }
 
-                Console.Clear();
+                Console.SetCursorPosition(0, 0);
             }
             Console.ReadKey();
         }

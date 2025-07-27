@@ -11,13 +11,20 @@ namespace Automat.StandartSettings
         {
             if (File.Exists(path))
             {
-                return JsonSerializer.Deserialize<Settings>(File.ReadAllText(path)) ?? AutoGenerateSettings();
+                Settings settings = JsonSerializer.Deserialize<Settings>(File.ReadAllText(path)) ?? AutoGenerateSettings();
+                if(settings == null)
+                {
+                    return GenerateKilledSettings();
+                }
+                return settings;
             }
             else
             {
                 return AutoGenerateSettings();
             }
         }
+
+        
 
         public static Settings AutoGenerateSettings()
         {
@@ -36,6 +43,21 @@ namespace Automat.StandartSettings
                     File.WriteAllText("settings.json", JsonSerializer.Serialize(settings));
                 }
 
+                return settings;
+        }
+
+        public static Settings GenerateKilledSettings()
+        {
+             Settings settings = new Settings();
+                settings.Width = 1200;
+                settings.Height = 600;
+                settings.GenerationType = GenerationType.RandomDot;
+                settings.GenerationCount = 100;
+                settings.Delay = 100;
+                settings.Rule = Rules.Rule22;
+                settings.JsonMode = false;
+                settings.JsonRule = "ExampleRule";
+                File.WriteAllText("settings.json", JsonSerializer.Serialize(settings));
                 return settings;
         }
     }

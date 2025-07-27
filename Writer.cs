@@ -5,6 +5,7 @@ namespace Automat
 {
     public class Writer
     {
+        private StringBuilder _stringBuilder = new StringBuilder();
 
         public Writer(Maps.Generator.MapRegenerator mapRegenerator)
         {
@@ -13,25 +14,21 @@ namespace Automat
 
         public void Write(Map map)
         {
-
-
-            StringBuilder stringBuilder = new StringBuilder();
-
             for (int i = 0; i < map.Cells.Count; i++)
             {
                 for (int j = 0; j < map.Cells[i].Count; j++)
                 {
-                    stringBuilder.Append(map.Cells[i][j].IsAlive ? "█" : " ");
+                    _stringBuilder.Append(map.Cells[i][j].IsAlive ? "█" : " ");
                 }
-                stringBuilder.AppendLine();
+                _stringBuilder.AppendLine();
             }
 
-            Console.WriteLine(stringBuilder.ToString());
+            Console.WriteLine(_stringBuilder.ToString());
+            _stringBuilder.Clear();
         }
 
         private void LogGenerationProgress(int currentGeneration, int totalGenerations)
         {
-            Console.SetCursorPosition(0, 0);
             Console.WriteLine($"Generation {currentGeneration}/{totalGenerations}");
         }
     }
