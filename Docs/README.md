@@ -149,6 +149,41 @@ This project implements an engine for one-dimensional cellular automata with sup
 **Example**
 - Condition "001_p50" will trigger with 50% chance if the standard condition "001" is true.
 
+## Bug-Shooting
+
+**"I changed the settings and nothing is displayed on screen!"**
+
+1. If you set Delay to -1, you need to press Enter once for generation to start. The first iteration is always empty.
+
+2. If tip #1 didn't help and you're using JSON custom rules, you might have chosen non-implementable conditions.
+
+3. If you are **SURE** that the conditions are implementable, you might want to delete the `CustomRules` folder to reset all custom rules (**WARNING:** When deleting the folder, all custom rules will be deleted, and the folder will be restored with a template custom rule).
+
+4. If tip #3 didn't help either, you can delete the `settings.json` file to reset settings. After launching, the settings file will be generated automatically.
+
+**System.Text.Json.JsonException: The JSON value could not be converted to Automat.StandardRules.Rule**
+
+- You used an incorrect built-in rule name in the `settings.json` file. Currently available built-in rules are "Rule22", "Rule30", "Rule110".
+
+**Condition is invalid ({some condition in the custom rule being used})**
+
+- You used a non-existent condition in your custom rule.
+
+**Rule not found by name: {name of the custom rule being used}**
+
+- The custom rule was not found by the name specified in `settings.json`. A small reminder: the specified rule name must match the `Name` field in the custom rule.
+
+**Invalid example**
+
+- If you encounter this, you are likely a developer. If you are a developer, check the Examples list in the ExampleFactory class.
+
+## Performance Issues
+
+**Console simulation is unreadable!**
+
+- Reduce console text scale using Ctrl and -
+- Use full-screen console mode
+
 ## License
 
 The project is distributed under the MIT license.
