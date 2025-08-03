@@ -55,6 +55,7 @@ namespace Automat.Maps
 
         public Cell GetCell(int x, int y)
         {
+            if (x < 0 || x >= this.Width || y < 0 || y >= this.Height) return null;
             return this.Cells[y][x];
         }
 
