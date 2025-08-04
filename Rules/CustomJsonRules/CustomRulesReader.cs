@@ -1,11 +1,18 @@
 using Automat.StandartRules;
 using System.IO;
 using System.Text.Json;
+using Automat.Debug;
 
 namespace Automat.CustomRules
 {
     public static class CustomRulesReader
     {
+        private static ILogger _logger;
+
+        public static void SetLogger(ILogger logger)
+        {
+            _logger = logger;
+        }
 
         public static CustomJsonRule FindRuleByName(string name)
         {
@@ -17,6 +24,7 @@ namespace Automat.CustomRules
                     return rules[i];
                 }
             }
+            _logger.Log("Rule not found by name: " + name);
             throw new Exception("Rule not found by name: " + name);
         }
 
@@ -43,6 +51,7 @@ namespace Automat.CustomRules
             }
             else
             {
+                _logger.Log("Custom rules directory not found");
                 throw new Exception("Custom rules directory not found");
             }
         }

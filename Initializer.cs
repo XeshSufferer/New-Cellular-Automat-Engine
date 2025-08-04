@@ -3,15 +3,47 @@ using Automat.Maps;
 using Automat.StandartRules;
 using Automat.Maps.Generator;
 using Automat.CustomRules;
+using Automat.Debug;
+using System;
+using Automat.ExampleSystem;
 
 namespace Automat
 {
-    public class Initializer
+    public class Initializer : IDisposable
     {
+
+        private ILogger _logger;
         public static void Main()
         {
-            Initializer initializer = new Initializer();
+            ILogger logger = new BaseLogger();
+            Initializer initializer = new Initializer(logger);
+
+            Console.CancelKeyPress += (sender, e) =>
+            {
+                e.Cancel = true;
+                initializer.Dispose();
+                Environment.Exit(0);
+            };
+            
+            AppDomain.CurrentDomain.ProcessExit += (sender, e) =>
+            {
+                initializer.Dispose(); 
+            };
+
+
             initializer.Initialize();
+        }
+
+        public Initializer(ILogger logger)
+        {
+            _logger = logger;
+            _logger.Log("[PROGRAM STARTING]");
+        }
+
+        public void Dispose()
+        {
+            _logger.Log("[PROGRAM ENDING]");
+            _logger.SaveAllLogs();
         }
 
 
@@ -20,6 +52,9 @@ namespace Automat
             Settings settings = SettingsReader.ReadSettings("settings.json");
             CustomRulesReader.GenerateExampleJsonRule();
             Map map = new Map(settings.Width, settings.Height);
+
+            ExamplesFactory.SetLogger(_logger);
+            CustomRulesReader.SetLogger(_logger);
 
             AutoFindAndWork(map, settings);
         }

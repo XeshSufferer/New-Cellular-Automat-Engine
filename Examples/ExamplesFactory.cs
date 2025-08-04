@@ -1,4 +1,5 @@
 using Automat.Maps;
+using Automat.Debug;
 
 namespace Automat.ExampleSystem
 {
@@ -6,6 +7,13 @@ namespace Automat.ExampleSystem
     {
 
         private static Random random = new Random();
+
+        private static ILogger _logger;
+
+        public static void SetLogger(ILogger logger)
+        {
+            _logger = logger;
+        }
 
 
         public static Dictionary<string, Func<Cell, bool>> Conditions { get; } = new Dictionary<string, Func<Cell, bool>>
@@ -73,8 +81,15 @@ namespace Automat.ExampleSystem
                 Examples.FalseTrueTrue => !cell.GetTopLeftCellValue() && cell.GetTopCellValue() && cell.GetTopRightCellValue(),
                 Examples.FalseFalseFalse => !cell.GetTopLeftCellValue() && !cell.GetTopCellValue() && !cell.GetTopRightCellValue(),
                 Examples.FalseFalseTrue => !cell.GetTopLeftCellValue() && !cell.GetTopCellValue() && cell.GetTopRightCellValue(),
-                _ => throw new Exception("Invalid example"),
+                _ => ThrowInvalidExample(example)
             };
+        }
+
+        private static bool ThrowInvalidExample(Examples example)
+        {
+            _logger.Log("Invalid example: " + example);
+            throw new Exception("Invalid example: " + example);
+            return false;
         }
     }
 }
