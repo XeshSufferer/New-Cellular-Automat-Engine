@@ -4,7 +4,7 @@ using Automat.StandartRules;
 using Automat.Maps.Generator;
 using Automat.CustomRules;
 using Automat.Debug;
-using System;
+using Automat.Writing;
 using Automat.ExampleSystem;
 
 namespace Automat
@@ -78,8 +78,8 @@ namespace Automat
 
         private void Work(Map map, IRule rule, int generationCount, int delay, Settings settings)
         {
-            MapRegenerator mapRegenerator = new MapRegenerator(map);
-            Writer writer = new Writer(mapRegenerator);
+            IMapRegenerator mapRegenerator = new MapRegenerator(map);
+            IWriter writer = new Writer(mapRegenerator);
 
             Map clearMap = map.Clone();
             Map newMap = clearMap.Clone();

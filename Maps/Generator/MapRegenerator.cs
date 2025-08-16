@@ -5,7 +5,7 @@ using Automat.CustomRules;
 
 namespace Automat.Maps.Generator
 {
-    public class MapRegenerator
+    public class MapRegenerator : IMapRegenerator
     {
 
         private Random _globalRandom = new Random();

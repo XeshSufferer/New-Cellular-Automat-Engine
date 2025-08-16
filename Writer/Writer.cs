@@ -1,13 +1,13 @@
 using Automat.Maps;
 using System.Text;
 
-namespace Automat
+namespace Automat.Writing
 {
-    public class Writer
+    public class Writer : IWriter
     {
         private StringBuilder _stringBuilder = new StringBuilder();
 
-        public Writer(Maps.Generator.MapRegenerator mapRegenerator)
+        public Writer(Maps.Generator.IMapRegenerator mapRegenerator)
         {
             mapRegenerator.OnGenerationProgress += LogGenerationProgress;
         }
