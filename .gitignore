@@ -21,6 +21,7 @@ Thumbs.db
 
 # Logs
 *.log
+*.txt
 
 # Custom rules archives
 CustomRules.zip
